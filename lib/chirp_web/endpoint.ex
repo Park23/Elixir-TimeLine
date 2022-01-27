@@ -46,5 +46,19 @@ defmodule ChirpWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+
+   plug :introspect
   plug ChirpWeb.Router
+
+  def introspect(conn, _opts) do
+    IO.write """
+    ("hello")
+    Verb: #{inspect(conn.method)}
+    Host: #{inspect(conn.host)}
+    Headers: #{inspect(conn.req_headers)}
+    """
+
+    conn
+  end
+
 end
